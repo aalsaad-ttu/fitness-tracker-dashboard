@@ -1,12 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Fitness Tracker Dashboard - Live Deployment Test</title>
-</head>
 <body>
-  <h1>Fitness Tracker Dashboard - Live Deployment Test</h1>
-  <p>This project will help users track meals, calories, and protein.</p>
+  <h1>Fitness Tracker Dashboard</h1>
+
+  <h2>Add Meal</h2>
+
+  <input type="text" id="mealName" placeholder="Meal name" />
+  <input type="number" id="calories" placeholder="Calories" />
+  <button onclick="addMeal()">Add Meal</button>
+
+  <h2>Meals</h2>
+  <ul id="mealList"></ul>
+
+  <h2>Total Calories: <span id="total">0</span></h2>
+
+  <script>
+    let totalCalories = 0;
+
+    function addMeal() {
+      const meal = document.getElementById("mealName").value;
+      const calories = parseInt(document.getElementById("calories").value);
+
+      if (!meal || isNaN(calories)) {
+        alert("Please enter valid meal and calories");
+        return;
+      }
+
+      // Add to list
+      const li = document.createElement("li");
+      li.textContent = meal + " - " + calories + " calories";
+      document.getElementById("mealList").appendChild(li);
+
+      // Update total
+      totalCalories += calories;
+      document.getElementById("total").textContent = totalCalories;
+
+      // Clear inputs
+      document.getElementById("mealName").value = "";
+      document.getElementById("calories").value = "";
+    }
+  </script>
 </body>
-</html>
