@@ -5,63 +5,213 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Fitness Tracker Dashboard</title>
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
+      margin: 0;
       font-family: Arial, sans-serif;
+      background-color: #f4f7fb;
+      color: #1f2937;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 30px 20px 60px;
+    }
+
+    .hero {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .hero h1 {
+      margin-bottom: 10px;
+      font-size: 2.5rem;
+    }
+
+    .hero p {
       max-width: 700px;
-      margin: 40px auto;
-      padding: 20px;
+      margin: 0 auto;
+      font-size: 1.05rem;
       line-height: 1.6;
     }
 
-    h1, h2 {
-      margin-bottom: 10px;
+    .card {
+      background-color: white;
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+    }
+
+    h2 {
+      margin-top: 0;
+      margin-bottom: 16px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .stat-box {
+      background-color: #eaf1ff;
+      border-radius: 10px;
+      padding: 18px;
+      text-align: center;
+    }
+
+    .stat-box h3 {
+      margin: 0 0 8px;
+      font-size: 1rem;
+    }
+
+    .stat-box p {
+      margin: 0;
+      font-size: 1.4rem;
+      font-weight: bold;
+    }
+
+    .form-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
     }
 
     input {
-      padding: 10px;
-      margin: 5px 5px 10px 0;
-      width: 200px;
+      flex: 1;
+      min-width: 200px;
+      padding: 12px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 1rem;
     }
 
     button {
-      padding: 10px 16px;
+      padding: 12px 18px;
+      background-color: #2563eb;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
       cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #1d4ed8;
     }
 
     ul {
       padding-left: 20px;
+      margin-bottom: 0;
     }
 
     li {
-      margin-bottom: 8px;
+      margin-bottom: 10px;
+      font-size: 1rem;
     }
 
-    .total-box {
-      margin-top: 20px;
-      font-size: 1.2rem;
-      font-weight: bold;
+    .info-section p {
+      line-height: 1.7;
+      margin-bottom: 12px;
+    }
+
+    footer {
+      text-align: center;
+      color: #6b7280;
+      font-size: 0.95rem;
+      margin-top: 30px;
+    }
+
+    @media (max-width: 700px) {
+      .hero h1 {
+        font-size: 2rem;
+      }
+
+      .stats {
+        grid-template-columns: 1fr;
+      }
+
+      .form-row {
+        flex-direction: column;
+      }
+
+      input,
+      button {
+        width: 100%;
+      }
     }
   </style>
 </head>
 <body>
-  <h1>Fitness Tracker Dashboard</h1>
-  <p>Track your meals and calories throughout the day.</p>
+  <div class="container">
+    <section class="hero">
+      <h1>Fitness Tracker Dashboard</h1>
+      <p>
+        This project helps users track meals and daily calorie intake in a simple and
+        organized way. It is designed for people who want a basic tool to support
+        fitness goals, weight loss, or healthier eating habits.
+      </p>
+    </section>
 
-  <h2>Add Meal</h2>
+    <section class="card">
+      <h2>Daily Tracking Overview</h2>
+      <div class="stats">
+        <div class="stat-box">
+          <h3>Daily Goal</h3>
+          <p id="goal">2000</p>
+        </div>
+        <div class="stat-box">
+          <h3>Total Calories</h3>
+          <p id="total">0</p>
+        </div>
+        <div class="stat-box">
+          <h3>Calories Remaining</h3>
+          <p id="remaining">2000</p>
+        </div>
+      </div>
+    </section>
 
-  <input type="text" id="mealName" placeholder="Meal name" />
-  <input type="number" id="calories" placeholder="Calories" />
-  <button onclick="addMeal()">Add Meal</button>
+    <section class="card">
+      <h2>Add Meal</h2>
+      <div class="form-row">
+        <input type="text" id="mealName" placeholder="Meal name" />
+        <input type="number" id="calories" placeholder="Calories" />
+        <button onclick="addMeal()">Add Meal</button>
+      </div>
+    </section>
 
-  <h2>Meals</h2>
-  <ul id="mealList"></ul>
+    <section class="card">
+      <h2>Meal Log</h2>
+      <ul id="mealList"></ul>
+    </section>
 
-  <div class="total-box">
-    Total Calories: <span id="total">0</span>
+    <section class="card info-section">
+      <h2>About This Tracker</h2>
+      <p>
+        Many fitness apps include too many features or require paid subscriptions.
+        This tracker focuses only on the essentials so users can quickly log meals
+        and understand how much of their daily calorie target they have used.
+      </p>
+      <p>
+        This first version is meant to demonstrate a working calorie tracking system
+        with real content, live interactivity, and a layout that works across
+        different screen sizes.
+      </p>
+    </section>
+
+    <footer>
+      Project 01 version of the Fitness Tracker Dashboard
+    </footer>
   </div>
 
   <script>
     let totalCalories = 0;
+    const dailyGoal = 2000;
 
     function addMeal() {
       const mealInput = document.getElementById("mealName");
@@ -80,6 +230,7 @@
 
       totalCalories += calories;
       document.getElementById("total").textContent = totalCalories;
+      document.getElementById("remaining").textContent = dailyGoal - totalCalories;
 
       mealInput.value = "";
       caloriesInput.value = "";
