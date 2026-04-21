@@ -5,13 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Fitness Tracker Dashboard</title>
   <style>
-    .meal-item {
+   .meal-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 12px;
   padding: 10px 0;
   border-bottom: 1px solid #e5e7eb;
+  list-style: none;
 }
 
 .delete-btn {
@@ -209,7 +210,9 @@
 
     <section class="card">
       <h2>Meal Log</h2>
-      <ul id="mealList"></ul>
+      <ul id="mealList">
+  <li id="placeholder">No meals added yet.</li>
+</ul>
     </section>
 
     <section class="card info-section">
@@ -231,33 +234,7 @@
     </footer>
   </div>
 
-  <script>
-    let totalCalories = 0;
-    const dailyGoal = 2000;
-
-    function addMeal() {
-      const mealInput = document.getElementById("mealName");
-      const caloriesInput = document.getElementById("calories");
-      const meal = mealInput.value.trim();
-      const calories = parseInt(caloriesInput.value);
-
-      if (meal === "" || isNaN(calories) || calories < 0) {
-        alert("Please enter a valid meal name and calorie amount.");
-        return;
-      }
-
-      const li = document.createElement("li");
-      li.textContent = meal + " - " + calories + " calories";
-      document.getElementById("mealList").appendChild(li);
-
-      totalCalories += calories;
-      document.getElementById("total").textContent = totalCalories;
-      document.getElementById("remaining").textContent = dailyGoal - totalCalories;
-
-      mealInput.value = "";
-      caloriesInput.value = "";
-    }
-  </script>
+ 
   <script>
   let totalCalories = 0;
   const dailyGoal = 2000;
