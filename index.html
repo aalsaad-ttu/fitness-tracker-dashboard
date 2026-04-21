@@ -5,6 +5,28 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Fitness Tracker Dashboard</title>
   <style>
+    .meal-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.delete-btn {
+  background-color: #dc2626;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.delete-btn:hover {
+  background-color: #b91c1c;
+}
     * {
       box-sizing: border-box;
     }
@@ -236,5 +258,66 @@
       caloriesInput.value = "";
     }
   </script>
+  <script>
+  let totalCalories = 0;
+  const dailyGoal = 2000;
+
+  function updateTotals() {
+    document.getElementById("total").textContent = totalCalories;
+    document.getElementById("remaining").textContent = dailyGoal - totalCalories;
+  }
+
+  function addMeal() {
+    const mealInput = document.getElementById("mealName");
+    const caloriesInput = document.getElementById("calories");
+    const meal = mealInput.value.trim();
+    const calories = parseInt(caloriesInput.value);
+
+    if (meal === "" || isNaN(calories) || calories < 0) {
+      alert("Please enter a valid meal name and calorie amount.");
+      return;
+    }
+
+    const list = document.getElementById("mealList");
+    const placeholder = document.getElementById("placeholder");
+
+    if (placeholder) {
+      placeholder.remove();
+    }
+
+    const li = document.createElement("li");
+    li.className = "meal-item";
+
+    const mealText = document.createElement("span");
+    mealText.textContent = meal + " - " + calories + " calories";
+
+    const deleteButton = document.createElement("button");
+    deleteButton.textContent = "Delete";
+    deleteButton.className = "delete-btn";
+
+    deleteButton.onclick = function () {
+      li.remove();
+      totalCalories -= calories;
+      updateTotals();
+
+      if (list.children.length === 0) {
+        const emptyItem = document.createElement("li");
+        emptyItem.id = "placeholder";
+        emptyItem.textContent = "No meals added yet.";
+        list.appendChild(emptyItem);
+      }
+    };
+
+    li.appendChild(mealText);
+    li.appendChild(deleteButton);
+    list.appendChild(li);
+
+    totalCalories += calories;
+    updateTotals();
+
+    mealInput.value = "";
+    caloriesInput.value = "";
+  }
+</script>
 </body>
 </html>
