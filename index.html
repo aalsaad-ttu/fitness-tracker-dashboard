@@ -5,29 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Fitness Tracker Dashboard</title>
   <style>
-   .meal-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-  padding: 10px 0;
-  border-bottom: 1px solid #e5e7eb;
-  list-style: none;
-}
-
-.delete-btn {
-  background-color: #dc2626;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  padding: 8px 12px;
-  cursor: pointer;
-  font-size: 0.9rem;
-}
-
-.delete-btn:hover {
-  background-color: #b91c1c;
-}
     * {
       box-sizing: border-box;
     }
@@ -138,6 +115,31 @@
       font-size: 1rem;
     }
 
+    .meal-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid #e5e7eb;
+      list-style: none;
+    }
+
+    .delete-btn {
+      background-color: #dc2626;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 8px 12px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+
+    .delete-btn:hover {
+      background-color: #b91c1c;
+    }
+
     .info-section p {
       line-height: 1.7;
       margin-bottom: 12px;
@@ -166,6 +168,15 @@
       input,
       button {
         width: 100%;
+      }
+
+      .meal-item {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .delete-btn {
+        width: auto;
       }
     }
   </style>
@@ -211,8 +222,8 @@
     <section class="card">
       <h2>Meal Log</h2>
       <ul id="mealList">
-  <li id="placeholder">No meals added yet.</li>
-</ul>
+        <li id="placeholder">No meals added yet.</li>
+      </ul>
     </section>
 
     <section class="card info-section">
@@ -223,78 +234,77 @@
         and understand how much of their daily calorie target they have used.
       </p>
       <p>
-        This first version is meant to demonstrate a working calorie tracking system
-        with real content, live interactivity, and a layout that works across
-        different screen sizes.
+        This version improves on Project 01 by giving users more control over their
+        entries. Meals can now be added and removed, making the tracker more useful
+        and realistic for everyday use.
       </p>
     </section>
 
     <footer>
-      Project 01 version of the Fitness Tracker Dashboard
+      Fitness Tracker Dashboard
     </footer>
   </div>
 
- 
   <script>
-  let totalCalories = 0;
-  const dailyGoal = 2000;
+    let totalCalories = 0;
+    const dailyGoal = 2000;
 
-  function updateTotals() {
-    document.getElementById("total").textContent = totalCalories;
-    document.getElementById("remaining").textContent = dailyGoal - totalCalories;
-  }
-
-  function addMeal() {
-    const mealInput = document.getElementById("mealName");
-    const caloriesInput = document.getElementById("calories");
-    const meal = mealInput.value.trim();
-    const calories = parseInt(caloriesInput.value);
-
-    if (meal === "" || isNaN(calories) || calories < 0) {
-      alert("Please enter a valid meal name and calorie amount.");
-      return;
+    function updateTotals() {
+      document.getElementById("total").textContent = totalCalories;
+      document.getElementById("remaining").textContent = dailyGoal - totalCalories;
     }
 
-    const list = document.getElementById("mealList");
-    const placeholder = document.getElementById("placeholder");
+    function addMeal() {
+      const mealInput = document.getElementById("mealName");
+      const caloriesInput = document.getElementById("calories");
+      const meal = mealInput.value.trim();
+      const calories = parseInt(caloriesInput.value);
 
-    if (placeholder) {
-      placeholder.remove();
-    }
+      if (meal === "" || isNaN(calories) || calories < 0) {
+        alert("Please enter a valid meal name and calorie amount.");
+        return;
+      }
 
-    const li = document.createElement("li");
-    li.className = "meal-item";
+      const list = document.getElementById("mealList");
+      const placeholder = document.getElementById("placeholder");
 
-    const mealText = document.createElement("span");
-    mealText.textContent = meal + " - " + calories + " calories";
+      if (placeholder) {
+        placeholder.remove();
+      }
 
-    const deleteButton = document.createElement("button");
-    deleteButton.textContent = "Delete";
-    deleteButton.className = "delete-btn";
+      const li = document.createElement("li");
+      li.className = "meal-item";
 
-    deleteButton.onclick = function () {
-      li.remove();
-      totalCalories -= calories;
+      const mealText = document.createElement("span");
+      mealText.textContent = meal + " - " + calories + " calories";
+
+      const deleteButton = document.createElement("button");
+      deleteButton.textContent = "Delete";
+      deleteButton.className = "delete-btn";
+
+      deleteButton.onclick = function () {
+        li.remove();
+        totalCalories -= calories;
+        updateTotals();
+
+        if (list.children.length === 0) {
+          const emptyItem = document.createElement("li");
+          emptyItem.id = "placeholder";
+          emptyItem.textContent = "No meals added yet.";
+          list.appendChild(emptyItem);
+        }
+      };
+
+      li.appendChild(mealText);
+      li.appendChild(deleteButton);
+      list.appendChild(li);
+
+      totalCalories += calories;
       updateTotals();
 
-      if (list.children.length === 0) {
-        const emptyItem = document.createElement("li");
-        emptyItem.id = "placeholder";
-        emptyItem.textContent = "No meals added yet.";
-        list.appendChild(emptyItem);
-      }
-    };
-
-    li.appendChild(mealText);
-    li.appendChild(deleteButton);
-    list.appendChild(li);
-
-    totalCalories += calories;
-    updateTotals();
-
-    mealInput.value = "";
-    caloriesInput.value = "";
-  }
-</script>
+      mealInput.value = "";
+      caloriesInput.value = "";
+    }
+  </script>
 </body>
 </html>
