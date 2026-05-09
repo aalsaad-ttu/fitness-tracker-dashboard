@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Fitness Tracker Dashboard</title>
+
   <style>
     * {
       box-sizing: border-box;
@@ -12,12 +13,12 @@
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background-color: #f4f7fb;
+      background: #eef3fb;
       color: #1f2937;
     }
 
     .container {
-      max-width: 900px;
+      max-width: 950px;
       margin: 0 auto;
       padding: 30px 20px 60px;
     }
@@ -29,89 +30,100 @@
 
     .hero h1 {
       margin-bottom: 10px;
-      font-size: 2.5rem;
+      font-size: 2.6rem;
+      color: #111827;
     }
 
     .hero p {
-      max-width: 700px;
+      max-width: 720px;
       margin: 0 auto;
       font-size: 1.05rem;
       line-height: 1.6;
+      color: #4b5563;
     }
 
     .card {
-      background-color: white;
-      border-radius: 12px;
+      background: white;
+      border-radius: 16px;
       padding: 24px;
-      margin-bottom: 20px;
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+      margin-bottom: 22px;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
     }
 
     h2 {
       margin-top: 0;
       margin-bottom: 16px;
+      color: #111827;
     }
 
     .stats {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(4, 1fr);
       gap: 16px;
     }
 
     .stat-box {
-      background-color: #eaf1ff;
-      border-radius: 10px;
+      background: #eaf1ff;
+      border-radius: 12px;
       padding: 18px;
       text-align: center;
     }
 
     .stat-box h3 {
       margin: 0 0 8px;
-      font-size: 1rem;
+      font-size: 0.95rem;
+      color: #374151;
     }
 
     .stat-box p {
       margin: 0;
       font-size: 1.4rem;
       font-weight: bold;
+      color: #1d4ed8;
     }
 
     .form-row {
-      display: flex;
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr auto;
       gap: 12px;
-      flex-wrap: wrap;
     }
 
     input {
-      flex: 1;
-      min-width: 200px;
       padding: 12px;
       border: 1px solid #cbd5e1;
-      border-radius: 8px;
+      border-radius: 10px;
       font-size: 1rem;
     }
 
     button {
       padding: 12px 18px;
-      background-color: #2563eb;
+      background: #2563eb;
       color: white;
       border: none;
-      border-radius: 8px;
+      border-radius: 10px;
       font-size: 1rem;
       cursor: pointer;
     }
 
     button:hover {
-      background-color: #1d4ed8;
+      background: #1d4ed8;
+    }
+
+    .clear-btn {
+      background: #6b7280;
+      margin-top: 14px;
+    }
+
+    .clear-btn:hover {
+      background: #4b5563;
     }
 
     ul {
-      padding-left: 20px;
+      padding-left: 0;
       margin-bottom: 0;
     }
 
     li {
-      margin-bottom: 10px;
       font-size: 1rem;
     }
 
@@ -120,16 +132,30 @@
       justify-content: space-between;
       align-items: center;
       gap: 12px;
-      padding: 10px 0;
+      padding: 12px 0;
       border-bottom: 1px solid #e5e7eb;
       list-style: none;
     }
 
+    .meal-details {
+      line-height: 1.5;
+    }
+
+    .meal-name {
+      font-weight: bold;
+      color: #111827;
+    }
+
+    .meal-macros {
+      color: #6b7280;
+      font-size: 0.95rem;
+    }
+
     .delete-btn {
-      background-color: #dc2626;
+      background: #dc2626;
       color: white;
       border: none;
-      border-radius: 6px;
+      border-radius: 8px;
       padding: 8px 12px;
       cursor: pointer;
       font-size: 0.9rem;
@@ -137,11 +163,17 @@
     }
 
     .delete-btn:hover {
-      background-color: #b91c1c;
+      background: #b91c1c;
+    }
+
+    #placeholder {
+      list-style: none;
+      color: #6b7280;
     }
 
     .info-section p {
       line-height: 1.7;
+      color: #4b5563;
       margin-bottom: 12px;
     }
 
@@ -152,7 +184,17 @@
       margin-top: 30px;
     }
 
-    @media (max-width: 700px) {
+    @media (max-width: 800px) {
+      .stats {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 520px) {
       .hero h1 {
         font-size: 2rem;
       }
@@ -161,34 +203,25 @@
         grid-template-columns: 1fr;
       }
 
-      .form-row {
-        flex-direction: column;
-      }
-
-      input,
-      button {
-        width: 100%;
-      }
-
       .meal-item {
         flex-direction: column;
         align-items: flex-start;
       }
 
       .delete-btn {
-        width: auto;
+        width: 100%;
       }
     }
   </style>
 </head>
+
 <body>
   <div class="container">
     <section class="hero">
       <h1>Fitness Tracker Dashboard</h1>
       <p>
-        This project helps users track meals and daily calorie intake in a simple and
-        organized way. It is designed for people who want a basic tool to support
-        fitness goals, weight loss, or healthier eating habits.
+        A simple fitness tracking tool that helps users log meals, monitor calories,
+        track protein, and stay aware of their daily nutrition goals.
       </p>
     </section>
 
@@ -199,13 +232,20 @@
           <h3>Daily Goal</h3>
           <p id="goal">2000</p>
         </div>
+
         <div class="stat-box">
           <h3>Total Calories</h3>
-          <p id="total">0</p>
+          <p id="totalCalories">0</p>
         </div>
+
         <div class="stat-box">
           <h3>Calories Remaining</h3>
-          <p id="remaining">2000</p>
+          <p id="remainingCalories">2000</p>
+        </div>
+
+        <div class="stat-box">
+          <h3>Total Protein</h3>
+          <p><span id="totalProtein">0</span>g</p>
         </div>
       </div>
     </section>
@@ -214,7 +254,8 @@
       <h2>Add Meal</h2>
       <div class="form-row">
         <input type="text" id="mealName" placeholder="Meal name" />
-        <input type="number" id="calories" placeholder="Calories" />
+        <input type="number" id="mealCalories" placeholder="Calories" />
+        <input type="number" id="mealProtein" placeholder="Protein grams" />
         <button onclick="addMeal()">Add Meal</button>
       </div>
     </section>
@@ -224,87 +265,137 @@
       <ul id="mealList">
         <li id="placeholder">No meals added yet.</li>
       </ul>
+      <button class="clear-btn" onclick="clearMeals()">Clear All Meals</button>
     </section>
 
     <section class="card info-section">
       <h2>About This Tracker</h2>
       <p>
-        Many fitness apps include too many features or require paid subscriptions.
-        This tracker focuses only on the essentials so users can quickly log meals
-        and understand how much of their daily calorie target they have used.
+        Many fitness apps include too many features or require subscriptions. This
+        tracker focuses on the essentials: logging meals, counting calories, and
+        tracking protein.
       </p>
       <p>
-        This version improves on Project 01 by giving users more control over their
-        entries. Meals can now be added and removed, making the tracker more useful
-        and realistic for everyday use.
+        This final MVP improves on Project 01 by adding protein tracking, delete
+        buttons, a clear all option, saved meals using local storage, and a more
+        polished responsive layout.
       </p>
     </section>
 
     <footer>
-      Fitness Tracker Dashboard
+      Final MVP: Fitness Tracker Dashboard
     </footer>
   </div>
 
   <script>
-    let totalCalories = 0;
     const dailyGoal = 2000;
+    let meals = JSON.parse(localStorage.getItem("meals")) || [];
 
-    function updateTotals() {
-      document.getElementById("total").textContent = totalCalories;
-      document.getElementById("remaining").textContent = dailyGoal - totalCalories;
+    function saveMeals() {
+      localStorage.setItem("meals", JSON.stringify(meals));
     }
 
-    function addMeal() {
-      const mealInput = document.getElementById("mealName");
-      const caloriesInput = document.getElementById("calories");
-      const meal = mealInput.value.trim();
-      const calories = parseInt(caloriesInput.value);
+    function updateTotals() {
+      let totalCalories = 0;
+      let totalProtein = 0;
 
-      if (meal === "" || isNaN(calories) || calories < 0) {
-        alert("Please enter a valid meal name and calorie amount.");
+      meals.forEach(function(meal) {
+        totalCalories += meal.calories;
+        totalProtein += meal.protein;
+      });
+
+      document.getElementById("totalCalories").textContent = totalCalories;
+      document.getElementById("remainingCalories").textContent = dailyGoal - totalCalories;
+      document.getElementById("totalProtein").textContent = totalProtein;
+    }
+
+    function renderMeals() {
+      const mealList = document.getElementById("mealList");
+      mealList.innerHTML = "";
+
+      if (meals.length === 0) {
+        const placeholder = document.createElement("li");
+        placeholder.id = "placeholder";
+        placeholder.textContent = "No meals added yet.";
+        mealList.appendChild(placeholder);
+        updateTotals();
         return;
       }
 
-      const list = document.getElementById("mealList");
-      const placeholder = document.getElementById("placeholder");
+      meals.forEach(function(meal, index) {
+        const li = document.createElement("li");
+        li.className = "meal-item";
 
-      if (placeholder) {
-        placeholder.remove();
+        const details = document.createElement("div");
+        details.className = "meal-details";
+
+        const name = document.createElement("div");
+        name.className = "meal-name";
+        name.textContent = meal.name;
+
+        const macros = document.createElement("div");
+        macros.className = "meal-macros";
+        macros.textContent = meal.calories + " calories | " + meal.protein + "g protein";
+
+        details.appendChild(name);
+        details.appendChild(macros);
+
+        const deleteButton = document.createElement("button");
+        deleteButton.className = "delete-btn";
+        deleteButton.textContent = "Delete";
+        deleteButton.onclick = function() {
+          deleteMeal(index);
+        };
+
+        li.appendChild(details);
+        li.appendChild(deleteButton);
+        mealList.appendChild(li);
+      });
+
+      updateTotals();
+    }
+
+    function addMeal() {
+      const mealNameInput = document.getElementById("mealName");
+      const mealCaloriesInput = document.getElementById("mealCalories");
+      const mealProteinInput = document.getElementById("mealProtein");
+
+      const name = mealNameInput.value.trim();
+      const calories = parseInt(mealCaloriesInput.value);
+      const protein = parseInt(mealProteinInput.value);
+
+      if (name === "" || isNaN(calories) || calories < 0 || isNaN(protein) || protein < 0) {
+        alert("Please enter a valid meal name, calories, and protein amount.");
+        return;
       }
 
-      const li = document.createElement("li");
-      li.className = "meal-item";
+      meals.push({
+        name: name,
+        calories: calories,
+        protein: protein
+      });
 
-      const mealText = document.createElement("span");
-      mealText.textContent = meal + " - " + calories + " calories";
+      saveMeals();
+      renderMeals();
 
-      const deleteButton = document.createElement("button");
-      deleteButton.textContent = "Delete";
-      deleteButton.className = "delete-btn";
-
-      deleteButton.onclick = function () {
-        li.remove();
-        totalCalories -= calories;
-        updateTotals();
-
-        if (list.children.length === 0) {
-          const emptyItem = document.createElement("li");
-          emptyItem.id = "placeholder";
-          emptyItem.textContent = "No meals added yet.";
-          list.appendChild(emptyItem);
-        }
-      };
-
-      li.appendChild(mealText);
-      li.appendChild(deleteButton);
-      list.appendChild(li);
-
-      totalCalories += calories;
-      updateTotals();
-
-      mealInput.value = "";
-      caloriesInput.value = "";
+      mealNameInput.value = "";
+      mealCaloriesInput.value = "";
+      mealProteinInput.value = "";
     }
+
+    function deleteMeal(index) {
+      meals.splice(index, 1);
+      saveMeals();
+      renderMeals();
+    }
+
+    function clearMeals() {
+      meals = [];
+      saveMeals();
+      renderMeals();
+    }
+
+    renderMeals();
   </script>
 </body>
 </html>
